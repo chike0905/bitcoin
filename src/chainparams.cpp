@@ -299,7 +299,7 @@ public:
         vSeeds.clear();      
         vSeeds.emplace_back("bitcoin.bsafe.network");
 
-        fDefaultConsistencyChecks = false
+        fDefaultConsistencyChecks = false;
         fRequireStandard = false;
         m_is_test_chain = true;
 
