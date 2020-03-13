@@ -965,13 +965,16 @@ std::string ArgsManager::GetChainName() const
     LOCK(cs_args);
     const bool fRegTest = ArgsManagerHelper::GetNetBoolArg(*this, "-regtest");
     const bool fTestNet = ArgsManagerHelper::GetNetBoolArg(*this, "-testnet");
+    const bool fBsafeNet = ArgsManagerHelper::GetNetBoolArg(*this, "-bsafenet");
     const bool is_chain_arg_set = IsArgSet("-chain");
 
-    if ((int)is_chain_arg_set + (int)fRegTest + (int)fTestNet > 1) {
-        throw std::runtime_error("Invalid combination of -regtest, -testnet and -chain. Can use at most one.");
+    if ((int)is_chain_arg_set + (int)fRegTest + (int)fTestNet + (int)fBsafeNet > 1) {
+        throw std::runtime_error("Invalid combination of -regtest, -testnet, -bsafenet and -chain. Can use at most one.");
     }
     if (fRegTest)
         return CBaseChainParams::REGTEST;
+    if (fBsafeNet)
+        return CBaseChainParams::BSAFENET;
     if (fTestNet)
         return CBaseChainParams::TESTNET;
     return GetArg("-chain", CBaseChainParams::MAIN);
